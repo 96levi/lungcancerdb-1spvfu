@@ -1,0 +1,41 @@
+<!-- For uploading file content -->
+<form [formGroup]="myForm" (ngSubmit)="submit()">
+
+    <div class="form-group">
+        <label for="{{folder}}">Tải ảnh kết quả lên (nếu có)</label>
+        <input formControlName="file" id="{{folder}}" type="file" class="form-control" multiple=""
+            (change)="onFileChange($event)">
+        <button *ngIf="images.length > 0" type="button" mat-icon-button color="primary" (click)="resetUploadFile()">
+            <mat-icon>autorenew</mat-icon>
+            <span>Chọn lại ảnh</span>
+        </button>
+    </div>
+    <img *ngFor='let url of images' [src]="url" height="150" width="200px" style="margin: 3px;"> <br />
+    <button class="btn btn-primary" type="submit">Tải lên</button>
+</form>
+<!-- For saving info into database -->
+<div>
+    <form [formGroup]="formInfo" (ngSubmit)="onSubmitInfo()">
+        <mat-form-field>
+            <input matInput type="number" formControlName="record" readonly>
+            <input matInput [matDatepicker]="dp1" formControlName="date" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dp1" disabled></mat-datepicker-toggle>
+            <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+            <input matInput [matDatepicker]="dp2" formControlName="dateHos" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dp2" disabled></mat-datepicker-toggle>
+            <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+            <input matInput type="number" formControlName="stt" readonly>
+            <input matInput type="text" formControlName="folder" readonly>
+            <input matInput type="text" formControlName="image" readonly>
+        </mat-form-field>
+    </form>
+</div>
+<div *ngIf="carousel.length > 0">
+    <carousel class="carousel" [interval]="0" [noPause]="false" [noWrap]=true [showIndicators]=true (activeSlideChange)="selectImage($event)">
+        <slide *ngFor="let el of carousel">
+            <a (click)="openWindow(imgSrc+el)"><img src="{{imgSrc+el}}" alt="imgSrc+el"></a>
+        </slide>
+    </carousel>
+    <br>
+    <button class="btn btn-warning" type="button" (click)="delectImage()">Xóa hình ảnh này</button>
+</div>

@@ -1,0 +1,19 @@
+.carousel {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    padding-top: 3%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 70%;
+}
+
+mat-form-field {
+    display: none;
+}
+
+img {
+    width: 80%;
+    height: auto;
+}
