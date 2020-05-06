@@ -1,0 +1,23 @@
+.content {
+    padding-top: 1%;
+}
+
+mat-form-field {
+    padding-right: 1%;
+}
+
+mat-form-field {
+    width: 15%;
+}
+mat-form-field {
+    padding-right: 1%;
+    width: 15%;
+}
+
+.hidden {
+    display: none;
+}
+
+.full-width {
+    width: 100%;
+}

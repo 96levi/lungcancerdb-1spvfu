@@ -1,0 +1,85 @@
+<form [formGroup]="addPatientForm" (ngSubmit)="onSubmit()">
+  <h1>Phần hành chính</h1>
+  <mat-form-field>
+    <mat-label>Ngày lập hồ sơ</mat-label>
+    <input matInput [matDatepicker]="dp1" formControlName="dateSet" readonly>
+    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput type="number" formControlName="stt" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Họ & Tên</mat-label>
+    <input matInput type="text" formControlName="name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Ngày sinh</mat-label>
+    <input matInput [matDatepicker]="dp2" formControlName="birthday" readonly>
+    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+    <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <mat-radio-group aria-label="Giới tính" formControlName="gender">
+    <mat-radio-button value="1">Nam</mat-radio-button>
+    <mat-radio-button value="2">Nữ</mat-radio-button>
+  </mat-radio-group>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Số điện thoại</mat-label>
+    <input matInput type="text" placeholder="Có thể nhập nhiều số" formControlName="phone">
+    <span matPrefix>+84</span>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Địa chỉ</mat-label>
+    <textarea matInput placeholder="Vd. 2/66 Phan Chu Trinh, Huế..." formControlName="address"></textarea>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Nghề nghiệp</mat-label>
+    <input matInput type="text" formControlName="occupation">
+  </mat-form-field>
+  <br>
+  <button mat-icon-button *ngIf="SubmitButtonCondition=='ADD'" color="primary" type="submit">
+    <mat-icon>save</mat-icon>
+    <span>Lưu hồ sơ</span>
+  </button>
+  <button mat-icon-button *ngIf="SubmitButtonCondition=='CHANGE'" color="warn" type="submit">
+    <mat-icon>save</mat-icon>
+    <span>Lưu hồ sơ</span>
+  </button>
+</form>
+<br>
+<ng-container>
+  <div *ngIf="SubmitButtonCondition=='CHANGE'" class="content" style="position: relative;">
+    <h1>Phần hồ sơ thăm khám</h1>
+    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="selected">
+      <mat-button-toggle value="add">
+        <mat-icon>note_add</mat-icon>
+        <span>Thêm mới</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <br>
+      <div class="row picker">
+        <mat-form-field class="select">
+          <mat-label>Xem lần khám trước</mat-label>
+          <mat-select (click)="clickSelectDay()">
+            <mat-option *ngFor="let n of SelectDayClinic$ | async" value="{{BigINTtoLocaleTime(+n.dateHos)}}"
+              (click)="returnFormValue(n.dateHos)">
+              {{BigINTtoLocaleTime(+n.dateHos)}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="col-xs-12 col-12 col-md-4 form-group">
+          <input readonly type="text" bsDaterangepicker id="bsDaterangepicker" class="form-control"
+            #dpr="bsDaterangepicker" [(ngModel)]="bsRangeValue" [bsConfig]="{ adaptivePosition: true }"
+            placeholder="Xem trong khoảng thời gian" (click)="clickRange()">
+        </div>
+      </div>
+    <app-show-info-by-range *ngIf="group.value!='add' && bsRangeValue.length>0" [range]="bsRangeValue" [stt]="stt">
+    </app-show-info-by-range>
+    <!-- Clinic section -->
+    <app-clinic *ngIf="group.value=='add'||dateHos" [stt]="stt" [add_view]="group.value" [day]="dateHos"></app-clinic>
+  </div>
+</ng-container>

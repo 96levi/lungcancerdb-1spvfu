@@ -1,0 +1,28 @@
+<div class="workupContent">
+    <form [formGroup]="petctform" (ngSubmit)="onSubmit()">
+        <input matInput type="number" formControlName="record" readonly hidden>
+        <mat-form-field class="hidden">
+            <mat-label>Ngày chụp phim</mat-label>
+            <input matInput [matDatepicker]="dp1" formControlName="date" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+            <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="hidden">
+            <mat-label>Ngày khám</mat-label>
+            <input matInput [matDatepicker]="dp2" formControlName="dateHos" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dp2" disabled></mat-datepicker-toggle>
+            <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <br>
+        <input matInput type="number" formControlName="stt" readonly hidden>
+        <mat-form-field class="full-width">
+            <mat-label>Mô tả kết quả</mat-label>
+            <textarea matInput type="text" formControlName="detail"></textarea>
+        </mat-form-field>
+        <br>
+        <button *ngIf="add_view=='add'" class="btn btn-primary" type="submit">Thêm hồ sơ mới</button>
+        <button *ngIf="add_view=='view'" class="btn btn-warning" type="submit">Lưu thay đổi</button>
+    </form>
+</div>
+<app-image-render *ngIf="add_view=='view'" [submitCondition]="add_view" [date]="date" [dateHos]="dateHos"
+    [folder]="table" [stt]="stt"></app-image-render>

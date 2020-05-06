@@ -1,0 +1,28 @@
+form {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+mat-form-field {
+    padding-right: 10px;
+}
+
+h1 {
+    color: #673ab7;
+    padding-top: 5%;
+}
+
+.content {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.select {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.picker {
+    padding-left: 2%;
+    padding-right: 2%;
+}

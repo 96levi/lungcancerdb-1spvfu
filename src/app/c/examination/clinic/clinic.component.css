@@ -1,0 +1,43 @@
+form {
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 2%;
+}
+
+mat-form-field {
+    padding-right: 10px
+}
+
+mat-form-field.halfWidth {
+    width: 50%;
+}
+
+.small {
+    width: 30%;
+}
+
+.center {
+    text-align: center;
+}
+
+span.warning {
+    color: red;
+}
+
+.workupSection {
+    padding-left: 3%;
+    padding-bottom: 5%;
+}
+
+.WorkupContent {
+    padding-top: 1%;
+}
+
+.switchButton {
+    display: inline;
+}
+
+p-inputSwitch {
+    padding-left: 5%;
+    padding-right: 1%;
+}

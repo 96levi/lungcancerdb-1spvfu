@@ -1,0 +1,163 @@
+<form [formGroup]="clinicForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <mat-label>Ngày khám</mat-label>
+        <input matInput [matDatepicker]="dp1" formControlName="dateHos" #dateHos readonly>
+        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+        <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput type="number" formControlName="stt" #stt>
+    </mat-form-field>
+    <input matInput type="number" formControlName="record" hidden>
+    <mat-form-field>
+        <mat-label>Lý do vào viện</mat-label>
+        <input matInput type="text" formControlName="reason">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Tiền sử</mat-label>
+        <input matInput type="text" formControlName="history">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="small">
+        <mat-label>Mạch</mat-label>
+        <input matInput type="number" formControlName="pulse">
+    </mat-form-field>
+    <mat-form-field class="small">
+        <mat-label>Nhiệt (°C)</mat-label>
+        <input matInput type="number" formControlName="temp">
+    </mat-form-field>
+    <mat-form-field class="small">
+        <mat-label>Huyết áp</mat-label>
+        <input matInput type="text" formControlName="pressure" pattern="[0-9]+\/[0-9]+" placeholder="Vd. 120/80">
+    </mat-form-field>
+    <mat-form-field class="small">
+        <mat-label>Tần số thở</mat-label>
+        <input matInput type="number" formControlName="resRate">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="small">
+        <mat-label>Chiều cao (cm)</mat-label>
+        <input matInput type="number" formControlName="height">
+    </mat-form-field>
+    <mat-form-field class="small">
+        <mat-label>Cân nặng (kg)</mat-label>
+        <input matInput type="number" formControlName="weight">
+    </mat-form-field>
+    <mat-form-field class="small">
+        <mat-label>KPS (%)</mat-label>
+        <input matInput type="number" formControlName="KPS">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="halfWidth">
+        <mat-label>Tim mạch</mat-label>
+        <textarea matInput type="text" formControlName="cardio"></textarea>
+    </mat-form-field>
+    <mat-form-field class="halfWidth">
+        <mat-label>Hô hấp</mat-label>
+        <textarea matInput type="text" formControlName="pulmo"></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="halfWidth">
+        <mat-label>Tiêu hóa</mat-label>
+        <textarea matInput type="text" formControlName="gastro"></textarea>
+    </mat-form-field>
+    <mat-form-field class="halfWidth">
+        <mat-label>Thận - Tiết niệu - Sinh dục</mat-label>
+        <textarea matInput type="text" formControlName="uro"></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="halfWidth">
+        <mat-label>Thần kinh</mat-label>
+        <textarea matInput type="text" formControlName="neuro"></textarea>
+    </mat-form-field>
+    <mat-form-field class="halfWidth">
+        <mat-label>Cơ quan khác</mat-label>
+        <textarea matInput type="text" formControlName="otherSys"></textarea>
+    </mat-form-field>
+    <br>
+    <div class="center">
+        <mat-form-field class="halfWidth">
+            <mat-label>Chẩn đoán lâm sàng</mat-label>
+            <input matInput type="text" formControlName="preDiagnosis">
+        </mat-form-field>
+    </div>
+    <br>
+    <div *ngIf="this.clinicForm.invalid"><span class="warning">* Điền đầy đủ thông tin</span></div>
+    <button *ngIf="SubmitButtonCondition=='ADD'" class="btn btn-primary" type="submit">Thêm hồ sơ mới</button>
+    <button *ngIf="SubmitButtonCondition=='CHANGE'" class="btn btn-warning" type="submit">Lưu thay đổi</button>
+</form>
+<br>
+<div *ngIf="SubmitButtonCondition=='CHANGE'">
+    <h2>Cận lâm sàng - Chẩn đoán - Điều trị</h2>
+    <div class="switchButton">
+        <mat-form-field>
+            <mat-label>Xem thông tin</mat-label>
+            <mat-select #workupSelect>
+                <mat-option *ngFor="let n of workup" value="{{n.en}}" (click)='reset_add_view()'>
+                    {{n.vi}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p-inputSwitch [(ngModel)]="switchButton" id="switchButton"></p-inputSwitch>
+        <label for="switchButton">Xem tất cả</label>
+    </div>
+    <app-list-all-workup *ngIf="switchButton" [stt]="stt.value" [dateHos]="dateHosToSend.getTime()"
+        [switchButton]="switchButton"></app-list-all-workup>
+    <div class="WorkupContent" *ngIf="workupSelect.value && !switchButton">
+        <h5>{{workupTittle(workupSelect.value)}}</h5>
+        <div *ngIf="workupSelect.value=='cbc'">
+            <app-cbc [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-cbc>
+        </div>
+        <div *ngIf="workupSelect.value=='ct'">
+            <app-ct [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-ct>
+        </div>
+        <div *ngIf="workupSelect.value=='diagnosis'">
+            <app-diagnosis [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-diagnosis>
+        </div>
+        <div *ngIf="workupSelect.value=='immune'">
+            <app-immune [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-immune>
+        </div>
+        <div *ngIf="workupSelect.value=='labo'">
+            <app-labo [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-labo>
+        </div>
+        <div *ngIf="workupSelect.value=='mutation'">
+            <app-mutation [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-mutation>
+        </div>
+        <div *ngIf="workupSelect.value=='patho'">
+            <app-patho [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-patho>
+        </div>
+        <div *ngIf="workupSelect.value=='pet_ct'">
+            <app-pet-ct [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-pet-ct>
+        </div>
+        <div *ngIf="workupSelect.value=='request'">
+            <app-request [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-request>
+        </div>
+        <div *ngIf="workupSelect.value=='followup'">
+            <app-followup [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-followup>
+        </div>
+        <div *ngIf="workupSelect.value=='treatment'">
+            <app-treatment [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-treatment>
+        </div>
+        <div *ngIf="workupSelect.value=='us'">
+            <app-us [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-us>
+        </div>
+        <div *ngIf="workupSelect.value=='xray'">
+            <app-x-ray [stt]="stt.value" [dateHos]="dateHosToSend.getTime()" [date]="dateHosToSend.getTime()"
+                [table]="workupSelect.value"></app-x-ray>
+        </div>
+    </div>
+</div>
