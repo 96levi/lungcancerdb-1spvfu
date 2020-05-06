@@ -1,0 +1,29 @@
+h2 {
+    padding-top: 3%;
+    text-align: center;
+    color: #673ab7;
+}
+
+table {
+    width: 100%;
+}
+
+#SearchBox {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.SearchBox-full-width {
+    width: 100%;
+    padding-bottom: 2%;
+}
+
+.content {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.mat-elevation-z8 {
+    padding-top: 2%;
+}

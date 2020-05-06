@@ -1,0 +1,59 @@
+<h2>Danh sách bệnh nhân</h2>
+<div class="content">
+    <div id="AddPatient">
+        <button mat-icon-button color="primary" routerLink="/addpatient">
+            <mat-icon>note_add</mat-icon>
+            <span>Thêm hồ sơ mới</span>
+        </button>
+    </div>
+
+    <div id="SearchBox">
+        <mat-form-field class="SearchBox-full-width">
+            <mat-label>Tìm kiếm</mat-label>
+            <input matInput #message maxlength="100" placeholder="Vd. Nhập tên bệnh nhân, năm sinh,..."
+                (keyup)="SearchBox($event.target.value)">
+            <mat-hint align="start"><strong>Nhập tiếng Việt có dấu</strong></mat-hint>
+            <mat-hint align="end">{{message.value.length}} / 100</mat-hint>
+        </mat-form-field>
+    </div>
+    <!-- Datatable -->
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <ng-container matColumnDef="stt">
+                <th mat-header-cell *matHeaderCellDef> STT </th>
+                <td mat-cell *matCellDef="let element"> {{element.stt}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Tên </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef> Giới </th>
+                <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="birthday">
+                <th mat-header-cell *matHeaderCellDef> Ngày sinh </th>
+                <td mat-cell *matCellDef="let element"> {{BigINTtoLocaleTime(+element.birthday)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Thao tác </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="primary" (click)="onClickEdit(element.stt)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" disabled>
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+        </table>
+    </div>
+</div>
