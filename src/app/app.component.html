@@ -1,0 +1,20 @@
+<div class="logo">
+    <button class="fix-header" mat-raised-button color="primary" (click)="visibleSidebar1 = true">
+        CLINIQUE DR.DZ
+    </button>
+</div>
+<div class="content">
+    <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+        <h1 style="font-weight:normal">CLINIQUE DR.DZ</h1>
+        <button mat-icon-button type="button" (click)="visibleSidebar1 = false" routerLink="home">
+            <mat-icon>home</mat-icon>
+            <span>Trang chủ</span>
+        </button>
+        <br>
+        <button mat-icon-button type="button" (click)="visibleSidebar1 = false" disabled>
+            <mat-icon>dashboard</mat-icon>
+            <span>Dashboard</span>
+        </button>
+    </p-sidebar>
+    <router-outlet></router-outlet>
+</div>

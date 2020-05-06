@@ -1,0 +1,17 @@
+.content {
+    padding-bottom: 7%;
+    padding-top: 10%;
+    padding-bottom: 100%;
+}
+
+.logo {
+    padding-top: 3%;
+}
+
+.fix-header {
+    top: 3%;
+    position: fixed;
+    z-index: 999;
+    margin: auto;
+    display: block;
+}
