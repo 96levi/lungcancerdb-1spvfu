@@ -1,0 +1,15 @@
+h2 {
+    padding-top: 3%;
+    color: #673ab7;
+}
+
+.textcenter {
+    text-align: center;    
+}
+
+.content {
+    padding-top: 3%;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #888888;
+}

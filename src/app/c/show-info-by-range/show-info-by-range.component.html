@@ -1,0 +1,5 @@
+<h4>Có tổng cộng: {{totalDateHos}} lần vào khám</h4>
+<div *ngFor=" let a of dateHos" class="content">
+    <h2 class="textcenter" color="primary">Vào ngày: {{BigINTtoLocaleTime(a.dateHos)}}</h2>
+    <app-clinic [stt]="stt" [add_view]="'view'" [day]="a.dateHos"></app-clinic>
+</div>
